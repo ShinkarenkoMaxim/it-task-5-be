@@ -1,7 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { validationResult } from 'express-validator';
 
-import { COUNT_PER_PAGE, INITIAL_COUNT_PER_PAGE } from '../../constants';
 import { queryValidateMiddleware } from '../../validations/account';
 import { Country, IAccountQueryParams } from '../interfaces/account';
 import { generateFakeData } from '../utils/faker';
