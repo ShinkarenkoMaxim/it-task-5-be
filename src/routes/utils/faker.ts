@@ -13,11 +13,12 @@ interface GeneratorOptions {
 export const generateFakeData = (options: GeneratorOptions) => {
   const accounts = [];
 
-  faker.seed(options.seed);
-  faker.locale = options.country;
-
   const isInitialPage = options.page === 1;
   const seed = isInitialPage ? options.seed : options.seed + options.page;
+
+  faker.seed(seed);
+  faker.locale = options.country;
+
   let shiftedIterator = isInitialPage ? 0 : 10 * options.page;
   const lengthOfIteration = isInitialPage
     ? INITIAL_COUNT_PER_PAGE
