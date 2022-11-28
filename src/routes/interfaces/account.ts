@@ -1,6 +1,6 @@
 export interface IAccount {
   num: number;
-  id: number;
+  id: string;
   fullName: string;
   address: string;
   phoneNumber: string;

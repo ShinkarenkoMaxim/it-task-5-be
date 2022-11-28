@@ -1,13 +1,7 @@
 import { faker } from '@faker-js/faker';
-import {
-  ACCOUNT_FIELDS,
-  COUNT_PER_PAGE,
-  INITIAL_COUNT_PER_PAGE,
-} from '../../constants';
-import { Country } from '../interfaces/account';
-
-const getRandomAccountField = () =>
-  ACCOUNT_FIELDS[(ACCOUNT_FIELDS.length * Math.random()) << 0];
+import { COUNT_PER_PAGE, INITIAL_COUNT_PER_PAGE } from '../../constants';
+import { Country, IAccount } from '../interfaces/account';
+import { generateErrorsForRecord } from './errorsGenerator';
 
 interface GeneratorOptions {
   page: number;
@@ -32,13 +26,17 @@ export const generateFakeData = (options: GeneratorOptions) => {
   for (let i = 0; i < lengthOfIteration; i++) {
     shiftedIterator++;
 
-    const account = {
+    let account: IAccount = {
       num: shiftedIterator,
       id: faker.database.mongodbObjectId(),
       fullName: faker.name.fullName(),
       address: `${faker.address.state()}, ${faker.address.cityName()}, ${faker.address.streetAddress()}`,
       phoneNumber: faker.phone.number(),
     };
+
+    if (options.errorsCount > 0) {
+      account = generateErrorsForRecord(options.errorsCount, account);
+    }
 
     accounts.push(account);
   }
